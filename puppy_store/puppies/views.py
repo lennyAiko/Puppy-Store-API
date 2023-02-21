@@ -36,4 +36,14 @@ def get_post_puppies(req):
         return Response(serializer.data)
     # insert a new record for a puppy
     elif req.method == 'POST':
-        return Response({})
+        data = {
+            'name': req.data.get('name'),
+            'age': int(req.data.get('age')),
+            'breed': req.data.get('breed'),
+            'color': req.data.get('color')
+        }
+        serializer = PuppySerializer(data=data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
