@@ -25,7 +25,11 @@ def get_delete_update_puppy(req, pk):
         return Response({})
     # update details of a single puppy
     elif req.method == 'PUT':
-        return Response({})
+        serializer = PuppySerializer(puppy, data=req.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_204_NO_CONTENT)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['GET', 'POST'])
 def get_post_puppies(req):
