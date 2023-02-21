@@ -18,7 +18,8 @@ def get_delete_update_puppy(req, pk):
     
     # get details for a single puppy
     if req.method == 'GET':
-        return Response({})
+        serializer = PuppySerializer(puppy)
+        return Response(serializer.data)
     # delete a single puppy
     elif req.method == 'DELETE':
         return Response({})
