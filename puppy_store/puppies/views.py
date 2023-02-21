@@ -30,7 +30,9 @@ def get_delete_update_puppy(req, pk):
 def get_post_puppies(req):
     # get all puppies
     if req.method == 'GET':
-        return Response({})
+        puppies = Puppy.objects.all()
+        serializer = PuppySerializer(puppies, many=True)
+        return Response(serializer.data)
     # insert a new record for a puppy
     elif req.method == 'POST':
         return Response({})
